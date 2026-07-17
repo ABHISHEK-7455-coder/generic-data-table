@@ -1,6 +1,7 @@
 import { useEffect, useState, type FormEvent } from "react";
 import { DataTable } from "./component/datatable";
 import type { User } from "./data/users";
+import "./App.css";
 
 const emptyForm = {
   name: "",
@@ -93,73 +94,92 @@ function App() {
   }
 
   return (
-    <div style={{ padding: "2rem" }}>
-      <h1>Generic Data Table</h1>
-      <p>Connects to your Express backend and MongoDB Atlas through the new CRUD API.</p>
+    <div className="app-shell">
+      <div className="page-card">
+        <header className="page-header">
+          <div>
+            <h1>Generic Data Table</h1>
+          </div>
+        </header>
 
-      <form onSubmit={handleSubmit} style={{ display: "grid", gap: "0.75rem", maxWidth: "24rem", marginBottom: "1.5rem" }}>
-        <input
-          type="text"
-          placeholder="Name"
-          value={form.name}
-          onChange={(event) => setForm((current) => ({ ...current, name: event.target.value }))}
-          required
-        />
-        <input
-          type="email"
-          placeholder="Email"
-          value={form.email}
-          onChange={(event) => setForm((current) => ({ ...current, email: event.target.value }))}
-          required
-        />
-        <input
-          type="number"
-          placeholder="Age"
-          value={form.age}
-          onChange={(event) => setForm((current) => ({ ...current, age: event.target.value }))}
-          required
-        />
-        <button type="submit">{editingId ? "Update User" : "Add User"}</button>
-        {editingId ? (
-          <button
-            type="button"
-            onClick={() => {
-              setEditingId(null);
-              setForm(emptyForm);
-            }}
-          >
-            Cancel
-          </button>
-        ) : null}
-      </form>
+        <div className="content-grid">
+          <section className="panel form-panel">
+            <h2>{editingId ? "Edit user" : "Add new user"}</h2>
+            <form onSubmit={handleSubmit} className="user-form">
+              <input
+                type="text"
+                placeholder="Name"
+                value={form.name}
+                onChange={(event) => setForm((current) => ({ ...current, name: event.target.value }))}
+                required
+              />
+              <input
+                type="email"
+                placeholder="Email@.com"
+                value={form.email}
+                onChange={(event) => setForm((current) => ({ ...current, email: event.target.value }))}
+                required
+              />
+              <input
+                type="number"
+                placeholder="Age"
+                value={form.age}
+                onChange={(event) => setForm((current) => ({ ...current, age: event.target.value }))}
+                required
+              />
+              <div className="form-actions">
+                <button type="submit" className="primary-btn">{editingId ? "Update User" : "Add User"}</button>
+                {editingId ? (
+                  <button
+                    type="button"
+                    className="secondary-btn"
+                    onClick={() => {
+                      setEditingId(null);
+                      setForm(emptyForm);
+                    }}
+                  >
+                    Cancel
+                  </button>
+                ) : null}
+              </div>
+            </form>
 
-      {message ? <p>{message}</p> : null}
+            {message ? <p className={`status-message ${message.toLowerCase().includes("success") ? "success" : "error"}`}>{message}</p> : null}
+            {loading ? <p className="loading-text">Loading users...</p> : null}
+          </section>
 
-      {loading ? <p>Loading users...</p> : null}
+          <section className="panel table-panel">
+            <div className="table-header">
+              <h2>Users</h2>
+              <span className="chip">{users.length} records</span>
+            </div>
 
-      <DataTable<User>
-        data={users}
-        columns={[
-          {
-            key: "id",
-            header: "ID",
-          },
-          {
-            key: "name",
-            header: "Name",
-          },
-          {
-            key: "email",
-            header: "Email",
-          },
-          {
-            key: "age",
-            header: "Age",
-          },
-        ]}
-        onEdit={handleEdit}
-        onDelete={handleDelete}
-      />
+            <DataTable<User>
+              data={users}
+              columns={[
+                {
+                  key: "id",
+                  header: "ID",
+                },
+                {
+                  key: "name",
+                  header: "Name",
+                },
+                {
+                  key: "email",
+                  header: "Email",
+                },
+                {
+                  key: "age",
+                  header: "Age",
+                },
+              ]}
+              onEdit={handleEdit}
+              onDelete={handleDelete}
+            />
+          </section>
+        </div>
+      </div>
     </div>
   );
 }

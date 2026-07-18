@@ -13,8 +13,8 @@ function App() {
   const [users, setUsers] = useState<User[]>([]);
   const [form, setForm] = useState(emptyForm);
   const [editingId, setEditingId] = useState<number | null>(null);
-  const [message, setMessage] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
 
   async function loadUsers() {
     setLoading(true);
@@ -32,6 +32,18 @@ function App() {
   useEffect(() => {
     void loadUsers();
   }, []);
+
+  useEffect(() => {
+    if (!message) return;
+
+    const timer = window.setTimeout(() => {
+      setMessage("");
+    }, 4000);
+
+    return () => {
+      window.clearTimeout(timer);
+    };
+  }, [message]);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();

@@ -15,6 +15,7 @@ function App() {
   const [editingId, setEditingId] = useState<number | null>(null);
   const [message, setMessage] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
+  const [searchTerm, setSearchTerm] = useState<string>("");
 
   async function loadUsers() {
     setLoading(true);
@@ -44,6 +45,15 @@ function App() {
       window.clearTimeout(timer);
     };
   }, [message]);
+
+  const filteredUsers = users.filter((user) => {
+    const term = searchTerm.trim().toLowerCase();
+    if (!term) return true;
+
+    return [user.id, user.name, user.email, user.age].some((value) =>
+      String(value).toLowerCase().includes(term),
+    );
+  });
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -163,11 +173,20 @@ function App() {
           <section className="panel table-panel">
             <div className="table-header">
               <h2>Users</h2>
-              <span className="chip">{users.length} records</span>
+              <div className="table-actions">
+                <input
+                  type="text"
+                  className="search-input"
+                  placeholder="Search users..."
+                  value={searchTerm}
+                  onChange={(event) => setSearchTerm(event.target.value)}
+                />
+                <span className="chip">{filteredUsers.length} records</span>
+              </div>
             </div>
 
             <DataTable<User>
-              data={users}
+              data={filteredUsers}
               columns={[
                 {
                   key: "id",

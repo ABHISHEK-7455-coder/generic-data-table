@@ -1,9 +1,38 @@
-.app-shell {
-  min-height: 100vh;
-  padding: 32px 20px;
+/* filepath: c:\Users\Dell\OneDrive\Desktop\Generic-Table\frontend\src\App.css */
+/* ...existing code... */
+
+.table-header {
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.table-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.search-input {
+  border: 1px solid #d7dce5;
+  border-radius: 999px;
+  padding: 0.3rem 0.95rem;
+  min-width: 220px;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.search-input:focus {
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.16);
+}
+
+.search-input::placeholder {
+  color: #7c879d;
 }
 
 .page-card {

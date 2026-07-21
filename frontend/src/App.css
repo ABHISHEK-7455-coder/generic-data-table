@@ -1,6 +1,12 @@
 /* filepath: c:\Users\Dell\OneDrive\Desktop\Generic-Table\frontend\src\App.css */
 /* ...existing code... */
 
+.app-shell {
+  margin:auto;
+  max-width: 1200px;
+  height: 100%;
+}
+
 .table-header {
   display: flex;
   align-items: center;

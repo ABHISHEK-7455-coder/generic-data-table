@@ -1,5 +1,5 @@
 .table-wrapper {
-    max-height: 420px;
+    height: 420px;
     overflow-y: auto;
     border-radius: 16px;
     border: 1px solid #eee8ff;
@@ -32,6 +32,9 @@
     text-align: left;
     border-bottom: 1px solid #eee8ff;
     color: #4d4860;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .data-table tbody tr:nth-child(even) {
@@ -44,7 +47,7 @@
 
 .pagination {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
     gap: 10px;
     margin-top: 12px;
@@ -54,7 +57,7 @@
 .pagination button {
     border: none;
     border-radius: 999px;
-    padding: 0px 12px;
+    padding: 4px 16px;
     background: #f4ebff;
     color: #7159b6;
     cursor: pointer;
